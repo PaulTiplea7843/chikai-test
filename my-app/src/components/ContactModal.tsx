@@ -21,9 +21,11 @@ export default function ContactModal(props:any){
     const [age, setAge] = useState("");
     const [email, setEmail] = useState("");
     const [telephone, setTelephone] = useState("");
-    const [avatar, setAvatar] = useState("");
+    const [avatar, setAvatar] = useState<string | ArrayBuffer>("");
     const [link, setLink] = useState("");
     const [tags, setTags] = useState("");
+
+    const formRef = React.useRef();
   
     const handleOpen = () => {
       setOpen(true);
@@ -34,14 +36,14 @@ export default function ContactModal(props:any){
 
     const update = async () => {
 
-      await axios({
-        method:"get",
-        url:`http://localhost:5000/app/updateContact?name=${name}&last_name=${lastName}&email=${email}&link=${link}&telephone=${telephone}&age=${age}&tags=${tags}&avatar=${avatar}&id=${props.id}`,
-      }).then(res =>{
+      //formRef.current.reportValidity();
+
+      await axios.post(`http://localhost:5000/app/updateContact?name=${name}&last_name=${lastName}&email=${email}&link=${link}&telephone=${telephone}&age=${age}&tags=${tags}&avatar=${avatar}&id=${props.id}`, { avatar: avatar} ).then(res =>{
         props.getContacts();
       })
       setOpen(false);
     }
+   
 
     const onChange =  (event, column:string) => {
       switch(column){
@@ -63,6 +65,21 @@ export default function ContactModal(props:any){
       }
       console.log(column, event.target.value);
   }
+
+  const storePicture = (event) =>{
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+
+      if(file){
+        reader.readAsBinaryString(file);
+      }
+      reader.onload = (e) =>{
+        setAvatar(e.target.result);
+      }
+
+      
+  }
   
     return (
       <div>
@@ -80,14 +97,15 @@ export default function ContactModal(props:any){
                 <br></br>
                 <br></br>
               <div className='box-content'>
+              <form   ref={formRef}>
                 <div>
-                  <TextField placeholder={props.contact.name} onChange={(event)=>{ onChange(event, 'name') }}  label="Name" />
+                  <TextField required  placeholder={props.contact.name} onChange={(event)=>{ onChange(event, 'name') }}  label="Name" />
                   <br />
                   <br />
-                  <TextField placeholder={props.contact.last_name} onChange={(event)=>{ onChange(event, 'last-name') }}  label="Last Name " />
+                  <TextField required placeholder={props.contact.last_name} onChange={(event)=>{ onChange(event, 'last-name') }}  label="Last Name " />
                   <br />
                   <br />
-                  <TextField placeholder={props.contact.telephone} onChange={(event)=>{ onChange(event, 'telephone') }}  label="Telephone" />
+                  <TextField required placeholder={props.contact.telephone} onChange={(event)=>{ onChange(event, 'telephone') }}  label="Telephone" />
                   <br />
                   <br />
                  <div>
@@ -100,6 +118,8 @@ export default function ContactModal(props:any){
                         <input
                           type="file"
                           hidden
+                          required
+                          onChange={(event) => { storePicture(event) }}
                          
                         />
                       </Button>
@@ -107,23 +127,25 @@ export default function ContactModal(props:any){
 
                 </div>
                 <div>
-                  <TextField placeholder={props.contact.age} onChange={(event)=>{ onChange(event, 'age') }}  label="Age" />
+                  <TextField required placeholder={props.contact.age} onChange={(event)=>{ onChange(event, 'age') }}  label="Age" />
                   <br />
                   <br />
-                  <TextField placeholder={props.contact.email} onChange={(event)=>{ onChange(event, 'email') }}  label="Email" />
+                  <TextField required placeholder={props.contact.email} onChange={(event)=>{ onChange(event, 'email') }}  label="Email" />
                   <br />
                   <br />
-                  <TextField placeholder={props.contact.link} onChange={(event)=>{ onChange(event, 'link') }}  label="Link" />
+                  <TextField required placeholder={props.contact.link} onChange={(event)=>{ onChange(event, 'link') }}  label="Link" />
                   <br />
                   <br />
-                  <TextField placeholder={props.contact.tags} onChange={(event)=>{ onChange(event, 'tags') }}  label="Tags" />
+                  <TextField required placeholder={props.contact.tags} onChange={(event)=>{ onChange(event, 'tags') }}  label="Tags" />
                 </div>
+                </form>
               </div>
 
 
               <div className="modal-action" >
-                <Button  variant="contained" color="warning">Update</Button>
+                <Button onClick={update}  variant="contained" color="warning">Update</Button>
               </div>
+              
             </Box>
       </Modal>
       </div>

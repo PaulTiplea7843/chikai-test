@@ -27,7 +27,7 @@ export default function CreateContactModal(props:any){
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [telephone, setTelephone] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState<string | ArrayBuffer>("");
   const [link, setLink] = useState("");
   const [tags, setTags] = useState("");
 
@@ -39,10 +39,7 @@ export default function CreateContactModal(props:any){
   };
 
   const create =  async () => {
-      await axios({
-        method:"get",
-        url:`http://localhost:5000/app/createContact?name=${name}&last_name=${lastName}&email=${email}&link=${link}&telephone=${telephone}&age=${age}&tags=${tags}&avatar=${avatar}`,
-      }).then(res =>{
+      await axios.post(`http://localhost:5000/app/createContact?name=${name}&last_name=${lastName}&email=${email}&link=${link}&telephone=${telephone}&age=${age}&tags=${tags}`, { avatar: avatar}).then(res =>{
         props.getContacts();
       })
     setOpen(false);
@@ -69,6 +66,20 @@ export default function CreateContactModal(props:any){
       }
       console.log(column, event.target.value);
   }
+  const storePicture = (event) =>{
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+
+    if(file){
+      reader.readAsBinaryString(file);
+    }
+    reader.onload = (e) =>{
+      setAvatar(e.target.result);
+    }
+
+    
+}
 
 
   
@@ -109,7 +120,7 @@ export default function CreateContactModal(props:any){
                         <input
                           type="file"
                           hidden
-                         
+                          onChange={(e) => { storePicture(e)}}
                         />
                       </Button>
                       </div>

@@ -4,7 +4,8 @@ const pool = require("../db");
 const createContact = async (req, res) =>{
     try{
 
-        const { name, last_name, age, email, avatar, link, tags, telephone } =  req.query;
+        const { name, last_name, age, email, link, tags, telephone } =  req.query;
+        const { avatar}  = req.body;
 
         const contact = await pool.query("SELECT * FROM contacts WHERE telephone = $1", [telephone]);
 

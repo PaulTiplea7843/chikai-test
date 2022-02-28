@@ -7,7 +7,7 @@ const updateContact = require("./functions/updateContact");
 
 
 
-router.get("/createContact", createContact);
+router.post("/createContact", createContact);
 router.get("/getContacts", getContacts);
 router.get("/updateContact", updateContact);
 
