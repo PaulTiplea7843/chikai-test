@@ -19,5 +19,5 @@ CREATE TABLE contacts(
     telephone VARCHAR(255) NOT NULL,
     link VARCHAR(255) NOT NULL,
     tags VARCHAR(255) NOT NULL,
-    avatar BYTEA,
+    avatar text,
 );
