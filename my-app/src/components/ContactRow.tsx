@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import ContactModal from './ContactModal';
 import Typography from '@mui/material/Typography';
+import { Avatar } from '@mui/material';
 
 
 export default function ContactRow(props:any){
@@ -15,6 +16,7 @@ export default function ContactRow(props:any){
         <CardContent className="content">
             <div className='card-content'>
                 <div className='contact-data-section'>
+                <Avatar alt={contact.name} />
                 <Typography className="contact-column">{contact.name} {contact.last_name}</Typography>
                 <Typography className="contact-column" id="phone-column">{contact.telephone}</Typography>
                 </div>
