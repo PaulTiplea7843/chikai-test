@@ -1,0 +1,60 @@
+.title{
+    text-align: center;
+}
+.contacts-table{
+    display: flex;
+    justify-content: center;
+}
+.contacts-actions{
+    display: flex;
+    justify-content: center;
+}
+
+
+/* Contact Row */
+
+.contact-row-card{
+    width: 60%;
+    margin-bottom: 10px;
+
+}
+.contact-data-section{
+    display: flex;
+}
+.contact-column{
+    padding: 5px;
+}
+.card-content{
+    display: flex;
+    justify-content: space-between;
+}
+#phone-column{
+    font-weight: bolder;
+}
+.content{
+    background-color: #00BFFF;
+}
+
+/* Contact Actions */
+
+.contact-actions-section{
+    display: flex;
+    padding-top: 10px;
+}
+#action-button{
+    margin-left: 10px;
+}
+
+/* Create Contact Modal */
+.modal-action{
+    display: flex;
+    justify-content: center;
+    padding-top: 25px;
+}
+.box-content{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* Contact Header */
+

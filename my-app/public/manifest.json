@@ -1,0 +1,8 @@
+{
+  "short_name": "Contact App",
+  "name": "Contact App for Chikai",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
